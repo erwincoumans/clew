@@ -6,18 +6,37 @@
 
 int main(int argc, char* argv[])
 {
-#ifdef __APPLE__
-const char* cl = "/System/Library/Frameworks/OpenCL.framework/Versions/Current/OpenCL";
-#else
-	const char* cl = "libOpenCL.so.1";
-	const char* cl2 = "libOpenCL.so";
-	const char* idc = "/etc/OpenCL/vendors/amdocl32.icd";
-#endif
+	int result = -1;
+
+#ifdef _WIN32
+	const char* cl = "OpenCL.dll";
+#elif defined __APPLE__
+	const char* cl = "/System/Library/Frameworks/OpenCL.framework/Versions/Current/OpenCL";
+#else//presumable Linux?
+	//linux (tested on Ubuntu 12.10 with Catalyst 13.4 beta drivers, not that there is no symbolic link from libOpenCL.so
 	int result = clewInit(cl);
+	char* cl = "libOpenCL.so.1";
+	result = clewInit(cl);
+	if (result != CLEW_SUCCESS)
+	{
+		cl = "libOpenCL.so";
+	} else
+	{
+		clExit();
+	}
+#endif
+	result = clewInit(cl);
 	if (result!=CLEW_SUCCESS)
 		printf("clewInit failed with error code %d\n",result);
 	else
+	{
 		printf("clewInit succesfull using %s\n",cl);
+
+		//some test and then
+		clewExit();
+	}
+	
+
 	return 0;
 }
 

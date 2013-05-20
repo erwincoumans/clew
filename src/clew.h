@@ -2382,6 +2382,10 @@ CLEW_FUN_EXPORT     PFNCLGETEXTENSIONFUNCTIONADDRESS    __clewGetExtensionFuncti
 
 //! \brief Load OpenCL dynamic library and set function entry points
 int         clewInit        (const char*);
+
+//! \brief Exit clew and unload OpenCL dynamic library
+void		clewExit();
+
 //! \brief Convert an OpenCL error code to its string equivalent
 const char* clewErrorString (cl_int error);
 

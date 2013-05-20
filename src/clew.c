@@ -112,7 +112,7 @@ PFNCLENQUEUEBARRIER                 __clewEnqueueBarrier                = NULL;
 PFNCLGETEXTENSIONFUNCTIONADDRESS    __clewGetExtensionFunctionAddress   = NULL;
 
 
-static void clewExit(void)
+void clewExit(void)
 {
     if (module != NULL)
     {
